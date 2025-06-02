@@ -1,40 +1,61 @@
-# EX 6C TRAVELLING SALES MAN PROBLEM
+# EX 6B KNAPSACK PROBLEM
 ## DATE:
 ## AIM:
-To Solve Travelling Sales man Problem for the following graph.
-
-![image](https://github.com/user-attachments/assets/653921a4-3d7b-4691-9b41-735e80f7af0b)
+To demonstrate a python program using dynamic programming for 0/1 knapsack problem.
 
 
 ## Algorithm
-1.Take the cost matrix that shows the cost between every pair of cities.
+1.If there are no items or capacity is 0.
 
-2.Generate all possible orders (permutations) in which the cities can be visited.
+2.Return 0 (no value can be added).
 
-3.For each order, calculate the total travel cost, including returning to the starting city.
+3.Check the weight of the current item:
 
-4.Keep track of the minimum total cost found so far.
+4.If it's more than the remaining capacity, skip it and move to the next item.
 
-5.After checking all possible orders, return the minimum cost as the final answer.   
+5.If the item can fit:
+
+6.Include it: Add its value and reduce the weight from total capacity.
+
+7.Exclude it: Move to the next item without including it.
+
+8.Return the maximum of the two choices (include or exclude).
 
 ## Program:
 ```
-# Developed by:Thilagavathi S
+# Developed by: THILAGAVATHI S
 # Register Number: 212222220053
 
 
 
-def tsp_cost(tsp):
-    return min(sum(tsp[i][j] for i, j in zip(path, path[1:] + path[:1])) for path in permutations(range(len(tsp))))
+def knapSack(W, wt, val, n):
+  
+    if n==0 or W==0:
+        return 0
+    if(wt[n-1]>W):
+        return knapSack(W,wt,val,n-1)
+    else:
+        return max(val[n-1] + knapSack(W-wt[n-1],wt,val,n-1) , knapSack(W,wt,val,n-1))
+    
 
-from itertools import permutations
-tsp = [[-1, 30, 25, 10], [15, -1, 20, 40], [10, 20, -1, 25], [30, 10, 20, -1]]
-print("Minimum Cost is :",tsp_cost(tsp))
+x=int(input())
+y=int(input())
+W=int(input())
+val=[]
+wt=[]
+for i in range(x):
+    val.append(int(input()))
+for y in range(y):
+    wt.append(int(input()))
+
+n = len(val)
+print('The maximum value that can be put in a knapsack of capacity W is: ',knapSack(W, wt, val, n))
 ```
+
 ## Output:
 
-![image](https://github.com/user-attachments/assets/4ab680e4-b50c-4368-8911-f5cc233598ec)
+![image](https://github.com/user-attachments/assets/0df9aee2-97e1-4d62-b2e7-bd0e60e21868)
 
 
 ## Result:
-Thus the program was executed successfully for finding the minimum cost to vist all cities.
+Thus the program was executed successfully for finding the maximum value that can be put in a knap sack of capacity .
